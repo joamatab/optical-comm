@@ -5,20 +5,13 @@ local_path = "C:/Users/Joe/Dropbox/research/codes";
 
 def file_len(fname):
     with open(fname, 'rb') as f:
-        for i, l in enumerate(f):
-            pass
+        pass
     return i + 1
 
 
 files = [];
 for (dirpath, dirnames, filenames) in walk(local_path):
-    for f in filenames:
-        if ".git\\" in dirpath:
-            continue;
-        else:
-            files.append(dirpath+"/"+f);
-
-
+    files.extend(f"{dirpath}/{f}" for f in filenames if ".git\\" not in dirpath)
 extensions = {};
 for f in files:
     try:
@@ -33,7 +26,7 @@ for f in files:
                 extensions[extension] += lines;
         else:
                 extensions[extension] = lines;
-                
+
     except Exception:
         print("Could not open file", f)
 
